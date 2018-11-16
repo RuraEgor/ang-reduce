@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Car, ICars} from './car.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ANG-PROB';
+  public cars: Car[] = [
+    new Car('Ford', '12.12.12', 'Focus', false, 1),
+    new Car('Audi', '08.08.12', 'A4', false, 2)
+  ];
+  
+  onAdd(car: Car) {
+    this.cars.push(car);
+  }
+  
+  onDelete(car: Car) {
+    this.cars = this.cars.filter( c => c.id !== car.id);
+  }
 }
+
