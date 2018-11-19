@@ -1,5 +1,8 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Car} from '../car.model';
+import {Component, Input} from "@angular/core";
+import {Car} from "../car.model";
+import {Store} from "@ngrx/store";
+import {IAppState} from "../redux/app.state";
+import {DeleteCar, UpdateCar} from "../redux/cars.action";
 
 @Component({
   selector: 'app-car',
@@ -7,15 +10,18 @@ import {Car} from '../car.model';
   styleUrls: ['./car.component.scss']
 })
 export class CarComponent {
-  
+
   @Input() car: Car;
-  @Output() deleteCar = new EventEmitter<Car>();
-  
-  onDelete() {
-    this.deleteCar.emit(this.car);
+
+  constructor(private store: Store<IAppState>) {
+
   }
-  
+
+  onDelete() {
+    this.store.dispatch(new DeleteCar(this.car));
+  }
+
   onBuy() {
-    this.car.isSold = true;
+    this.store.dispatch(new UpdateCar(this.car));
   }
 }
