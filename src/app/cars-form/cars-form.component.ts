@@ -3,7 +3,8 @@ import {Car} from "../car.model";
 import * as moment from "moment";
 import {Store} from "@ngrx/store";
 import {IAppState} from "../redux/app.state";
-import {AddCar} from "../redux/cars.action";
+import {AddCar, LoadCars} from "../redux/cars.action";
+import {CarsService} from "../cars.service";
 
 @Component({
   selector: 'app-cars-form',
@@ -17,7 +18,7 @@ export class CarsFormComponent {
   carName: string = '';
   carModel: string = '';
 
-  constructor(private store: Store<IAppState>) {
+  constructor(private store: Store<IAppState>, private service: CarsService) {
   }
 
   onAdd() {
@@ -40,8 +41,8 @@ export class CarsFormComponent {
   }
 
   onLoad() {
-    // todo
+    // this.service.loadCars().subscribe( data => console.log( 'fffffffff', JSON.parse(data) ) );
+    this.service.loadCars().subscribe( data => this.store.dispatch(new LoadCars(JSON.parse(data._body))) );
   }
-
 
 }
